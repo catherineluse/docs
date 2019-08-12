@@ -3,9 +3,20 @@ title: API
 weight: 7500
 ---
 
-## How to use the API
+If you want to access your Rancher clusters, projects, or other objects using external applications, you can do so using the Rancher API.
 
-The API has its own user interface accessible from a web browser.  This is an easy way to see resources, perform actions, and see the equivalent cURL or HTTP request & response.  To access it, click on your user avatar in the upper right corner. Under **API & Keys**, you can find the URL endpoint as well as create [API keys]({{< baseurl >}}/rancher/v2.x/en/user-settings/api-keys/).
+# Getting Started
+
+
+### Using the API in the Browser
+
+The API has its own user interface accessible from a web browser. This is an easy way to see resources, perform actions, and see the equivalent cURL or HTTP request & response.
+
+To access the API view,
+
+1. Click on your user avatar in the upper right corner.
+1. Click **API & Keys.** 
+1. From here, you can find the URL endpoint as well as create [API keys]({{< baseurl >}}/rancher/v2.x/en/user-settings/api-keys/).
 
 ## Authentication
 
