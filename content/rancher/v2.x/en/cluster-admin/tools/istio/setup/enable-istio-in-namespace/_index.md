@@ -3,11 +3,7 @@ title: 2. Enable Istio in a Namespace
 weight: 2
 ---
 
-Enabling Istio in a cluster enables Istio in all new namespaces that are created in a cluster.
-
-When Istio is enabled in the cluster, the label for Istio sidecar auto injection,`istio-injection=enabled`, will be automatically added to each new namespace in this cluster. This turns on automatic Istio sidecar injection in all new workloads that are deployed in those namespaces.
-
-You will need to manually enable Istio in preexisting namespaces so that the Envoy sidecar proxy will be automatically injected into all new workloads that are deployed in the namespace.
+You will need to manually enable Istio in each namespace that you want to be tracked or controlled by Istio. When Istio is enabled in a namespace, the Envoy sidecar proxy will be automatically injected into all new workloads that are deployed in the namespace.
 
 This namespace setting will only affect new workloads in the namespace. Any preexisting workloads will need to be re-deployed to leverage the sidecar auto injection.
 
