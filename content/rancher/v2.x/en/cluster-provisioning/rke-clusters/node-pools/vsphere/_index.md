@@ -13,8 +13,9 @@ When creating a vSphere cluster, Rancher first provisions the specified amount o
 
 A vSphere cluster may consist of multiple groups of VMs with distinct properties, such as the amount of memory or the number of vCPUs. This grouping allows for fine-grained control over the sizing of nodes for the data, control, and worker plane respectively.
 
->**Note:**
->The vSphere node driver included in Rancher currently only supports the provisioning of VMs with [RancherOS]({{< baseurl >}}/os/v1.x/en/) as the guest operating system.
+In Rancher v2.3.3+, the vSphere node driver supports any operating system that supports cloud init.
+
+In Rancher prior to v2.3.3, the vSphere node driver included in Rancher only supported the provisioning of VMs with [RancherOS]({{<baseurl>}}/os/v1.x/en/) as the guest operating system.
 
 This section covers the following topics:
 
@@ -22,11 +23,12 @@ This section covers the following topics:
   - [vSphere API permissions](#vsphere-api-permissions)
   - [Network permissions](#network-permissions)
   - [Creating vSphere credentials to create clusters](#creating-vsphere-credentials-to-create-clusters)
-- [Enabling the vSphere provider in Rancher](#enabling-the-vsphere-provider-in-rancher)
+- [Enabling the vSphere provider](#enabling-the-vsphere-provider)
 - [Enabling Disk UUIDs with a node template](#enabling-disk-uuids-with-a-node-template)
 - [Creating vSphere Clusters in Rancher](#creating-vsphere-clusters-in-rancher)
   - [1. Create a Node Template Using vSphere Credentials](#1-create-a-node-template-using-vsphere-credentials)
   - [2. Create a vSphere Kubernetes cluster with the node template](#2-create-a-vsphere-kubernetes-cluster-with-the-node-template)
+- [Configuring an Operating System for Nodes](#configuring-an-operating-system-for-nodes)
 - [Provisioning Storage](#provisioning-storage)
 - [Node template configuration reference](#node-template-configuration-reference)
 
@@ -56,9 +58,9 @@ You must ensure that the hosts running Rancher servers are able to establish net
 
 Refer to this [how-to guide]({{<baseurl>}}/rancher/v2.x/en/cluster/rke-clusters/node-pools/vsphere/creating-credentials) for instructions on how to create a user in vSphere with the required permissions. These steps result in a username and password that you will need to provide to Rancher as a cloud credential, which allows Rancher to provision resources in vSphere.
 
-# Enabling the vSphere Provider in Rancher
+# Enabling the vSphere Provider
 
-When provisioning clusters in Rancher using the [vSphere node driver]({{< baseurl >}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/) or on pre-created [custom nodes]({{< baseurl >}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) the cluster YAML file must be modified in order to enable the cloud provider.
+When provisioning clusters in Rancher using the [vSphere node driver]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/) or on pre-created [custom nodes]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) the cluster YAML file must be modified in order to enable the cloud provider.
 
 1. Log in to the Rancher UI as admin user.
 2. Navigate to **Clusters** in the **Global** view.
@@ -71,7 +73,7 @@ When provisioning clusters in Rancher using the [vSphere node driver]({{< baseur
     {{< img "/img/rancher/vsphere-node-driver-cloudprovider.png" "vsphere-node-driver-cloudprovider">}}
 
 8. Click on **Edit as YAML**
-9. Insert the following structure to the pre-populated cluster YAML. As of Rancher v2.3+, this structure must be placed under `rancher_kubernetes_engine_config`. In versions prior to v2.3, it has to be defined as a top level field. Note that the `name` *must* be set to `vsphere`. Refer to the [configuration reference](#configuration-reference) to learn about the properties of the `vsphereCloudProvider` directive.
+9. Insert the following structure to the pre-populated cluster YAML. As of Rancher v2.3+, this structure must be placed under `rancher_kubernetes_engine_config`. In versions prior to v2.3, it has to be defined as a top level field. Note that the `name` *must* be set to `vsphere`. 
 
     ```yaml
     rancher_kubernetes_engine_config: # Required as of Rancher v2.3+
@@ -81,11 +83,14 @@ When provisioning clusters in Rancher using the [vSphere node driver]({{< baseur
               [Insert provider configuration]
     ```
 
-10. Configure the **Node Pools** per your requirements while ensuring to use a node template that enables disk UUIDs for the VMs (See [Annex - Enable disk UUIDs for vSphere VMs]).
+    Refer to the [configuration reference](#configuration-reference) or [example configuration]([link]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/config-example) to learn about the properties of the `vsphereCloudProvider` directive.
+
+10. Configure the **Node Pools** per your requirements while ensuring to use a node template that enables disk UUIDs for the VMs (See the section on [enabling disk UUIDs for vSphere VMs.](#enabling-disk-uuids-with-a-node-template)
 11. Click on **Create** to start provisioning the VMs and Kubernetes services.
 
-
 # Enabling Disk UUIDs with a Node Template
+
+> **Note:** As of v2.3.3, disk UUIDs are enabled in vSphere node templates by default.
 
 When creating new clusters in Rancher using vSphere node templates, you can configure the template to automatically enable disk UUIDs for all VMs created for a cluster:
 
@@ -101,6 +106,8 @@ When creating new clusters in Rancher using vSphere node templates, you can conf
 
 5. Click **Create** or **Save**.
 
+**Result:** The disk UUID is enabled in the vSphere node template.
+
 # Creating vSphere Clusters in Rancher
 
 Create vSphere clusters in Rancher by following these steps:
@@ -110,40 +117,48 @@ Create vSphere clusters in Rancher by following these steps:
 
 ### 1. Create a Node Template Using vSphere Credentials
 
-To create a cluster, you need to create at least one vSphere [node template]({{< baseurl >}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/#node-templates)  that specifies how VMs are created in vSphere.
+To create a cluster, you need to create at least one vSphere [node template]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/#node-templates)  that specifies how VMs are created in vSphere.
 
->**Note:**
->Once you create a node template, it is saved, and you can re-use it whenever you create additional vSphere clusters.
+After you create a node template, it is saved, and you can re-use it whenever you create additional vSphere clusters.
+
+To create a node template,
 
 1. Log in with an admin account to the Rancher UI.
 
-2. From the user settings menu, select **Node Templates**.
+1. From the user settings menu, select **Node Templates**.
 
-3. Click **Add Template** and then click on the **vSphere** icon.
+1. Click **Add Template** and then click on the **vSphere** icon.
 
-4. Under [Account Access](#account-access) enter the vCenter FQDN or IP address and the credentials for the vSphere user account (see [Prerequisites](#prerequisites)).
+1. Under [Account Access](#account-access) enter the vCenter FQDN or IP address and the credentials for the vSphere user account (see [Prerequisites](#prerequisites)).
 
 	{{< step_create-cloud-credential >}}
 
-5. Under [Instance Options](#instance-options), configure the number of vCPUs, memory, and disk size for the VMs created by this template.
-
-6. **Optional:** Enter the URL pointing to a [RancherOS]({{< baseurl >}}/os/v1.x/en/) cloud-config file in the [Cloud Init](#instance-options) field.
-
-7. Ensure that the [OS ISO URL](#instance-options) contains the URL of a VMware ISO release for RancherOS (`rancheros-vmware.iso`).
-
-    {{< img "/img/rancher/vsphere-node-template-1.png" "image">}}
-
-8. **Optional:** Provide a set of [Configuration Parameters](#instance-options) for the VMs.
-
-9. Under **Scheduling**, enter the name/path of the **Data Center** to create the VMs in, the name of the **VM Network** to attach to, and the name/path of the **Datastore** to store the disks in.
+1. Under **Scheduling**, enter the name/path of the **Data Center** to create the VMs in, the name of the **VM Network** to attach to, and the name/path of the **Datastore** to store the disks in.
 
     {{< img "/img/rancher/vsphere-node-template-2.png" "image">}}
 
-10. **Optional:** Assign labels to the VMs that can be used as a base for scheduling rules in the cluster.
+1. Under [Instance Options](#instance-options), configure the number of vCPUs, memory, and disk size for the VMs created by this template.
 
-11. **Optional:** Customize the configuration of the Docker daemon on the VMs that will be created.
+Prior to v2.3.3, only RancherOS VMs are supported.
 
-10. Assign a descriptive **Name** for this template and click **Create**.
+In Rancher v2.3.3+, you can use the **Creation method** field to configure the method for setting up an operating system on the node. You can use any operating system that supports cloud init. For details, refer to the section on [configuring an operating system for nodes.](#configurin-an-operating-system-for-nodes)
+
+1. **Optional:** Enter the URL pointing to a cloud-config file in the [Cloud Init](#instance-options) field.
+
+1. Ensure that the [OS ISO URL](#instance-options) contains the URL of a VMware ISO release. For example, the URL for RancherOS is (`rancheros-vmware.iso`).
+
+    {{< img "/img/rancher/vsphere-node-template-1.png" "image">}}
+
+1. **Optional:**
+
+  - Provide a set of [Configuration Parameters](#instance-options) for the VMs.
+  - Assign labels to the VMs that can be used as a base for scheduling rules in the cluster.
+  - Customize the configuration of the Docker daemon on the VMs that will be created.
+  - As of v2.3.3., you can optionally add vSphere tags and custom attributes. Tags allow you to attach metadata to objects in the vSphere inventory to make it easier to sort and search for these objects.
+  
+  > **Note:** Custom attributes are a legacy feature that will eventually be removed from vSphere. These attributes allow you to attach metadata to objects in the vSphere inventory to make it easier to sort and search for these objects.
+
+1. Assign a descriptive **Name** for this template and click **Create**.
 
 ### 2. Create a vSphere Kubernetes Cluster with the Node Template
 
@@ -171,11 +186,19 @@ After you've created a template, you can use it stand up the vSphere cluster its
 
 {{< result_create-cluster >}}
 
-# Provisioning Storage
+# Configuring an Operating System for Nodes
 
-For an example of how to provision storage in vSphere using Rancher, refer to the 
- [cluster administration section.]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/volumes-and-storage/examples/vsphere)
+_Available as of v2.3.3_
+
+Prior to v2.3.3, only RancherOS was supported, but in this version, you can configure a vSphere node template to use any operating system that supports cloud init.
 
 # Node Template Configuration Reference
 
 Refer to [this section]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/node-template-reference) for a reference on the configuration options available for vSphere node templates.
+
+# Provisioning Storage
+
+> Before Rancher can provision storage in vSphere, you need to [enable the vSphere provider.](#enabling-the-vsphere-provider-in-rancher)
+
+For an example of how to provision storage in vSphere using Rancher, refer to the 
+ [cluster administration section.]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/volumes-and-storage/examples/vsphere)

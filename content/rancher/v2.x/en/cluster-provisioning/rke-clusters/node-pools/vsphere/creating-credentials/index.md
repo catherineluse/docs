@@ -3,7 +3,7 @@ title: Creating vSphere Credentials to Create Clusters
 weight: 1
 ---
 
-This section describes how to create a vSphere username and password that you can provide to Rancher as a cloud credential, which will allow Rancher to provision resources in vSphere.
+This section describes how to create a vSphere username and password. You will need to provide these vSphere credentials to Rancher as a cloud credential, which allows Rancher to provision resources in vSphere. Thes which will allow Rancher to provision resources in vSphere.
 
 The following steps create a role with the required privileges and then assign it to a new user in the vSphere console:
 
