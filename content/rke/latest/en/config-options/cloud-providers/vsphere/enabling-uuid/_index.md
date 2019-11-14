@@ -1,0 +1,31 @@
+---
+title: Enabling Disk UUIDs for vSphere VMs
+weight: 2
+---
+
+Depending on whether you are provisioning the VMs using the [vSphere node driver]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere) in Rancher or using your own scripts or third-party tools, there are different methods available to enable disk UUIDs for VMs:
+
+- [Using the vSphere console](#using-the-vsphere-console)
+- [Using the GOVC CLI tool](#using-the-govc-cli-tool)
+- [Using a Rancher node template](#using-a-rancher-node-template)
+
+### Using the vSphere Console
+
+The required property can be set while creating or modifying VMs in the vSphere Console:
+
+1. For each VM navigate to the tab **VM Options** and click on **Edit Configuration**.
+2. Add the parameter `disk.EnableUUID` with a value of **TRUE**.
+
+    {{< img "/img/rke/vsphere-advanced-parameters.png" "vsphere-advanced-parameters">}}
+
+### Using the GOVC CLI tool
+
+You can also modify properties of VMs with the [govc](https://github.com/vmware/govmomi/tree/master/govc) command-line tool to enable disk UUIDs:
+
+```sh
+$ govc vm.change -vm <vm-path> -e disk.enableUUID=TRUE
+```
+
+### Using a Rancher Node Template
+
+For information on enabling a UUID with a Rancher node template, refer to the [Rancher documentation.]({{<baseurl>}}/rancher/v2.x/en/cluster-provisionin/rke-clusters/node-pools/vsphere/#enabling-disk-uuids-with-a-node-template)
