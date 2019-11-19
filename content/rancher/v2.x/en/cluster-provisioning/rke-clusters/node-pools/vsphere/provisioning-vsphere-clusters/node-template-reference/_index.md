@@ -1,6 +1,6 @@
 ---
 title: vSphere Node Template Configuration Reference
-weight: 2
+weight: 4
 ---
 
 The tables below describe the configuration options available in the vSphere node template:

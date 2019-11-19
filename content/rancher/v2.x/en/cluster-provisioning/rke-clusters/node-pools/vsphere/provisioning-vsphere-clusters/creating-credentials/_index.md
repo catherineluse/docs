@@ -1,5 +1,5 @@
 ---
-title: Creating vSphere Credentials to Create Clusters
+title: Configuring vSphere Credentials in Rancher
 weight: 1
 ---
 
