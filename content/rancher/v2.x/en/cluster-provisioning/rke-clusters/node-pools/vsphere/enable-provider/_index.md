@@ -2,9 +2,11 @@
 title: Enabling the vSphere Provider
 weight: 2
 ---
-You need to modify the cluster YAML file to enable the vSphere provider.
+Before provisioning vSphere clusters in Rancher, you need to modify the cluster YAML file to enable the vSphere provider.
 
-The vSphere provider is required when provisioning vSphere clusters in Rancher. The requirement applies to both pre-created [custom nodes]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) and for nodes created in Rancher using the vSphere node driver.
+This requirement applies to both pre-created [custom nodes]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) and for nodes created in Rancher using the vSphere node driver.
+
+To enable the vSphere provider for cluster, follow these steps:
 
 1. Log in to the Rancher UI as admin user.
 2. Navigate to **Clusters** in the **Global** view.

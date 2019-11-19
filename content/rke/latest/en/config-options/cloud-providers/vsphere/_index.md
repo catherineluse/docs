@@ -3,25 +3,26 @@ title: vSphere Cloud Provider
 weight: 254
 ---
 
+In order to provision Kubernetes clusters in vSphere with the RKE CLI, you must enable the vSphere cloud provider.
+
+The vSphere cloud provider must also be enabled in order to provision clusters with Rancher, which uses RKE as a library when provisioning [RKE clusters.]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/)
+
 The [vSphere Cloud Provider](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/) interacts with VMware infrastructure (vCenter or standalone ESXi server) to provision and manage storage for persistent volumes in a Kubernetes cluster.
 
-When provisioning Kubernetes using RKE CLI or using [RKE clusters]({{< baseurl >}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/) in Rancher, the vSphere Cloud Provider can be enabled by configuring the `cloud_provider` directive in the cluster YAML file.
+This section describes how to enable the vSphere cloud provider. You will need to use the `cloud_provider` directive in the cluster YAML file.
 
-This section covers the following topics:
+### Related Links
 
-- [Prerequisites](#prerequisites)
-- [Enabling the vSphere provider](#enabling-the-vsphere-provider)
-- [vSphere configuration reference](#vsphere-configuration-reference)
-- [Example vSphere configuration](#example-vsphere-configuration)
-- [Enabling disk UUIDs for vSphere VMs](#enabling-disk-uuids-for-vsphere-vms)
-- [Troubleshooting](#troubleshooting)
-- [Related links](#related-links)
+- **Configuration:** For details on vSphere configuration in RKE, refer to the [configuration reference.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/config-reference)
+- **Troubleshooting:** For guidance on troubleshooting a cluster with the vSphere cloud provider enabled, refer to the [troubleshooting section.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/troubleshooting)
+- **Storage:** If you are setting up storage, see the [official vSphere documentation on storage for Kubernetes,](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/) or the [official Kubernetes documentation on persistent volumes.](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) If you are using Rancher, refer to the [Rancher documentation on provisioning storage in vSphere.]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/volumes-and-storage/examples/vsphere)
+- **For Rancher users:** Refer to the Rancher documentation on [creating vSphere Kubernetes clusters]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere) and [provisioning storage.]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/volumes-and-storage/examples/vsphere)
 
 # Prerequisites
 
-- You'll need to have credentials of a vCenter/ESXi user account with privileges allowing the cloud provider to interact with the vSphere infrastructure to provision storage. Refer to [this document](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/vcp-roles.html) to create and assign a role with the required permissions in vCenter.
-- VMware Tools must be running in the Guest OS for all nodes in the cluster.
-- All nodes must be configured with disk UUIDs. This is required so that attached VMDKs present a consistent UUID to the VM, allowing the disk to be mounted properly. See the section on [enabling disk UUIDs.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/enabling-uuid)
+- **Credentials:** You'll need to have credentials of a vCenter/ESXi user account with privileges allowing the cloud provider to interact with the vSphere infrastructure to provision storage. Refer to [this document](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/vcp-roles.html) to create and assign a role with the required permissions in vCenter.
+- **VMware Tools** must be running in the Guest OS for all nodes in the cluster.
+- **Disk UUIDs:** All nodes must be configured with disk UUIDs. This is required so that attached VMDKs present a consistent UUID to the VM, allowing the disk to be mounted properly. See the section on [enabling disk UUIDs.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/enabling-uuid)
 
 # Enabling the vSphere Provider
 
@@ -35,25 +36,4 @@ To enable the vSphere Cloud Provider in the cluster, you must add the top-level 
 
 If you are using Rancher, refer to the [Rancher documentation]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/#enabling-the-vsphere-provider-in-rancher) for instructions on enabling the vSphere provider in Rancher.
 
-# vSphere Configuration Reference
 
-For details on vSphere configuration in RKE, refer to the [configuration reference.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/config-reference)
-
-# Example vSphere Configuration
-
-Refer to [this section]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/config-example) for an example of how to configure vSphere with RKE.
-
-# Enabling Disk UUIDs for vSphere VMs
-
-Disk UUIDs can be enabled for vSphere VMs using the vSphere console, the GOVC CLI tool, or a Rancher node template. For details, refer to the section on [enabling disk UUIDs.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/enabling-uuid)
-
-# Troubleshooting
-
-For guidance on troubleshooting a cluster with the vSphere cloud provider enabled, refer to the [troubleshooting section.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/troubleshooting)
-
-# Related Links
-
-- [vSphere Storage for Kubernetes](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/)
-- [Kubernetes Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-- [Creating vSphere clusters in Rancher]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere)
-- [Provisioning storage in vSphere using Rancher]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/volumes-and-storage/examples/vsphere)
