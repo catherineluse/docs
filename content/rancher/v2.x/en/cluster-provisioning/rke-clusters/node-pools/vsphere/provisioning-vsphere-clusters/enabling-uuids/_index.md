@@ -3,7 +3,11 @@ title: Enabling Disk UUIDs in Node Templates
 weight: 3
 ---
 
-When creating new clusters in Rancher using vSphere node templates, you can configure the template to automatically enable disk UUIDs for all VMs created for a cluster:
+As of Rancher v2.0.4, disk UUIDs are enabled in vSphere node templates by default.
+
+For Rancher prior to v2.0.4, we recommend configuring a vSphere node template to automatically enable disk UUIDs because they are required for Rancher to manipulate vSphere resources.
+
+To enable disk UUIDs for all VMs created for a cluster,
 
 1. Navigate to the **Node Templates** in the Rancher UI while logged in as admin user.
 

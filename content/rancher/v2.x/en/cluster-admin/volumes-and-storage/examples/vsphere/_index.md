@@ -10,7 +10,7 @@ To provide stateful workloads with vSphere storage, we recommend creating a vSph
 
 ### Prerequisites
 
-Before Rancher can provision storage in vSphere, you need to [enable the vSphere provider.]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/#enabling-the-vsphere-provider-in-rancher)
+Before Rancher can provision storage in vSphere, you need to [enable the vSphere provider.]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/provisioning-vsphere-clusters/#enable-the-vsphere-cloud-provider-for-the-cluster)
 
 ### Creating A Storage Class
 

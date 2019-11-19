@@ -24,16 +24,10 @@ This section describes how to enable the vSphere cloud provider. You will need t
 - **VMware Tools** must be running in the Guest OS for all nodes in the cluster.
 - **Disk UUIDs:** All nodes must be configured with disk UUIDs. This is required so that attached VMDKs present a consistent UUID to the VM, allowing the disk to be mounted properly. See the section on [enabling disk UUIDs.]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/enabling-uuid)
 
-# Enabling the vSphere Provider
-
-The vSphere provider can be enabled in two ways: with the RKE CLI, and with Rancher.
-
-### Enabling the vSphere Provider with the RKE CLI
+# Enabling the vSphere Provider with the RKE CLI
 
 To enable the vSphere Cloud Provider in the cluster, you must add the top-level `cloud_provider` directive to the cluster configuration file, set the `name` property to `vsphere` and add the `vsphereCloudProvider` directive containing the configuration matching your infrastructure. See the [configuration reference]({{<baseurl>}}/rke/latest/en/config-options/cloud-providers/vsphere/config-reference) for the gory details.
 
-### Enabling the vSphere Provider with Rancher
+# Enabling the vSphere Provider with Rancher
 
-If you are using Rancher, refer to the [Rancher documentation]({{<baseurl>}}/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/#enabling-the-vsphere-provider-in-rancher) for instructions on enabling the vSphere provider in Rancher.
-
-
+If you are using Rancher, refer to the [Rancher documentation](/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/vsphere/provisioning-vsphere-clusters/#enable-the-vsphere-cloud-provider-for-the-cluster) for instructions on enabling the vSphere provider in Rancher.
