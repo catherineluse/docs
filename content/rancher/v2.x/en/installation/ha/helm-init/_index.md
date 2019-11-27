@@ -9,15 +9,17 @@ For systems without direct internet access, see [Helm - Air Gap]({{< baseurl >}}
 
 Refer to the [Helm version requirements]({{<baseurl>}}/rancher/v2.x/en/installation/helm-version) to choose a version of Helm to install Rancher.
 
+> **Note:** These docs assume you are using Helm 2. These instructions will be updated for Helm 3 soon. In the meantime, if you want to use Helm 3, refer to [these instructions.](https://github.com/ibrokethecloud/rancher-helm3)
+
 ### Install Tiller on the Cluster
 
 > **Important:** Due to an issue with Helm v2.12.0 and cert-manager, please use Helm v2.12.1 or higher.
 
 Helm installs the `tiller` service on your cluster to manage charts. Since RKE enables RBAC by default we will need to use `kubectl` to create a `serviceaccount` and `clusterrolebinding` so `tiller` has permission to deploy to the cluster.
 
-* Create the `ServiceAccount` in the `kube-system` namespace.
-* Create the `ClusterRoleBinding` to give the `tiller` account access to the cluster.
-* Finally use `helm` to install the `tiller` service
+- Create the `ServiceAccount` in the `kube-system` namespace.
+- Create the `ClusterRoleBinding` to give the `tiller` account access to the cluster.
+- Finally use `helm` to install the `tiller` service
 
 ```plain
 kubectl -n kube-system create serviceaccount tiller
@@ -28,8 +30,8 @@ kubectl create clusterrolebinding tiller \
 
 helm init --service-account tiller
 
-# Users in China: You will need to specify a specific tiller-image in order to initialize tiller. 
-# The list of tiller image tags are available here: https://dev.aliyun.com/detail.html?spm=5176.1972343.2.18.ErFNgC&repoId=62085. 
+# Users in China: You will need to specify a specific tiller-image in order to initialize tiller.
+# The list of tiller image tags are available here: https://dev.aliyun.com/detail.html?spm=5176.1972343.2.18.ErFNgC&repoId=62085.
 # When initializing tiller, you'll need to pass in --tiller-image
 
 helm init --service-account tiller \
