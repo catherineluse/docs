@@ -3,7 +3,9 @@ title: Rancher AWS Quick Start Guide
 description: Read this step by step Rancher AWS guide to quickly deploy a Rancher Server with a single node cluster attached.
 weight: 100
 ---
-The following steps will quickly deploy a Rancher Server with a single node cluster attached.
+In this guide, you will learn how to quickly deploy the Rancher management server in a single Docker container. You will also deploy one downstream single-node Kubernetes cluster.
+
+> **Note:** In a production environment, the Rancher server would run on a separate, designated Kubernetes cluster. For more information, refer to our [Best Practices Guide.]({{<baseurl>}}/rancher/v2.x/en/best-practices/)
 
 ## Prerequisites
 
@@ -45,9 +47,9 @@ The following steps will quickly deploy a Rancher Server with a single node clus
       ]
 	```
 
-8. Paste the `rancher-url` from the output above into the browser. Log in when prompted (default username is `admin`, and default password is `admin`).
+8. Paste the `rancher-url` from the output above into the browser. This URL is the endpoint that downstream Kubernetes clusters will use to communicate with the Rancher management server, and it cannot be changed later. Log in when prompted (default username is `admin`, and default password is `admin`).
 
-**Result:** Rancher Server and your Kubernetes cluster is installed in Amazon AWS.
+**Result:** The Rancher management server and your downstream Kubernetes cluster is installed in Amazon AWS.
 
 ### What's Next?
 

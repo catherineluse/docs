@@ -4,9 +4,11 @@ weight: 300
 ---
 Howdy Partner! This tutorial walks you through:
     
-- Installation of {{< product >}} 2.x
-- Creation of your first cluster
-- Deployment of an application, Nginx
+- Installation of the Rancher management server in a single Docker container
+- Creation of your first downstream Kubernetes cluster
+- Deployment of an application, NGINX
+
+> **Note:** In a production environment, the Rancher server would run on a separate, designated Kubernetes cluster. For more information, refer to our [Best Practices Guide.]({{<baseurl>}}/rancher/v2.x/en/best-practices/)
 
 ## Quick Start Outline
 
@@ -64,7 +66,7 @@ Log in to Rancher to begin using the application. After you log in, you'll make 
 
 2.  When prompted, create a password for the default `admin` account there cowpoke!
 
-3. Set the **Rancher Server URL**. The URL can either be an IP address or a host name. However, each node added to your cluster must be able to connect to this URL.<br/><br/>If you use a hostname in the URL, this hostname must be resolvable by DNS on the nodes you want to add to you cluster.
+3. Set the **Rancher Server URL**. The URL can either be an IP address or a host name. This URL is the endpoint that downstream Kubernetes clusters will use to communicate with the Rancher management server, and it cannot be changed later. <br/><br/>If you use a hostname in the URL, this hostname must be resolvable by DNS on the nodes you want to add to a downstream cluster.
 
 <br/>
 

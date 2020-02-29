@@ -2,7 +2,9 @@
 title: DigitalOcean Quick Start
 weight: 100
 ---
-The following steps will quickly deploy a Rancher Server with a single node cluster attached.
+In this guide, you will learn how to quickly deploy the Rancher management server in a single Docker container. You will also deploy one downstream three-node Kubernetes cluster.
+
+> **Note:** In a production environment, the Rancher server would run on a separate, designated Kubernetes cluster. For more information, refer to our [Best Practices Guide.]({{<baseurl>}}/rancher/v2.x/en/best-practices/)
 
 ## Prerequisites
 
@@ -41,7 +43,7 @@ The following steps will quickly deploy a Rancher Server with a single node clus
       ]
 	```
 
-8. Paste the `rancher-url` from the output above into the browser. Log in when prompted (default password is `admin`).
+8. Paste the `rancher-url` from the output above into the browser. This URL is the endpoint that downstream Kubernetes clusters will use to communicate with the Rancher management server, and it cannot be changed later. Log in when prompted (default password is `admin`).
 
 **Result:** Rancher Server and your Kubernetes cluster is installed on DigitalOcean.
 

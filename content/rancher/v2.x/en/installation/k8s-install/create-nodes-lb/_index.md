@@ -7,16 +7,18 @@ aliases:
 
 In this section, you will provision the underlying infrastructure for your Rancher management server.
 
-The recommended infrastructure for the Rancher-only Kubernetes cluster differs depending on whether Rancher will be installed on a K3s Kubernetes cluster, an RKE Kubernetes cluster, or a single Docker container.
+The infrastructure depends on whether you are installing Rancher on a K3s Kubernetes cluster, an RKE Kubernetes cluster, or a single Docker container.
 
-For more information about each installation option, refer to [this page.]({{<baseurl>}}/rancher/v2.x/en/installation)
+In an RKE cluster, the cluster data is stored in etcd, a distributed database that runs on multiple controlplane nodes. By contrast, one advantage of a high-availability K3s cluster is that the cluster data can be stored in an external MySQL datastore, allowing the controlplane nodes to be ephemeral.
+
+For more information on each installation option, refer to [this page.]({{<baseurl>}}/rancher/v2.x/en/installation/)
 
 {{% tabs %}}
 {{% tab "K3s" %}}
 To install the Rancher management server on a high-availability K3s cluster, we recommend setting up the following infrastructure:
 
 - **Two Linux nodes,** typically virtual machines, in the infrastructure provider of your choice.
-- **An external database** to store the cluster data. PostgreSQL, MySQL, and etcd are supported.
+- **An external MySQL database** to store the cluster data.
 - **A load balancer** to direct traffic to the two nodes.
 - **A DNS record** to map a URL to the load balancer. This will become the Rancher server URL, and downstream Kubernetes clusters will need to reach it.
 
@@ -28,19 +30,15 @@ For an example of one way to set up Linux nodes, refer to this [tutorial]({{<bas
 
 ### 2. Set up External Datastore
 
-The ability to run Kubernetes using a datastore other than etcd sets K3s apart from other Kubernetes distributions. This feature provides flexibility to Kubernetes operators. The available options allow you to select a datastore that best fits your use case.
+The ability to run Kubernetes using a datastore other than etcd sets K3s apart from other Kubernetes distributions. This feature provides flexibility to Kubernetes operators. One advantage of having the external database for K3s is that you can have two ephemeral controlplane nodes.
 
-For a high-availability K3s installation, you will need to set up one of the following external databases:
-
-* [PostgreSQL](https://www.postgresql.org/) (certified against versions 10.7 and 11.5)
-* [MySQL](https://www.mysql.com/) (certified against version 5.7)
-* [etcd](https://etcd.io/) (certified against version 3.3.15)
+For a high-availability K3s installation, you will need to set up a [MySQL](https://www.mysql.com/) external database. Rancher has been tested on a K3s cluster using a MySQL 5.7 database.
 
 When you install Kubernetes using the K3s installation script, you will pass in details for K3s to connect to the database.
 
-For an example of one way to set up the database, refer to this [tutorial](./rds) for setting up a MySQL database on Amazon's RDS service.
+For an example of one way to set up the database, refer to this [tutorial]({{<baseurl>}}/rancher/v2.x/en/installation/options/rds/) for setting up a MySQL database on Amazon's RDS service.
 
-For the complete list of options that are available for configuring a K3s cluster datastore, refer to the [K3s documentation.]({{<baseurl>}}/k3s/latest/en/installation/datastore/)
+For the complete list of options that are available for configuring a K3s cluster datastore, refer to the [K3s documentation.]({{<baseurl>}}/k3s/latest/en/installation/datastore/) For the options that are officially supported, refer to the [support and maintenance terms.](https://rancher.com/support-maintenance-terms/)
 
 ### 3. Set up the Load Balancer
 
@@ -53,7 +51,7 @@ When Rancher is installed (also in a later step), the Rancher system creates an 
 For your implementation, consider if you want or need to use a Layer-4 or Layer-7 load balancer:
 
 - **A layer-4 load balancer** is the simpler of the two choices, in which you are forwarding TCP traffic to your nodes. We recommend configuring your load balancer as a Layer 4 balancer, forwarding traffic to ports TCP/80 and TCP/443 to the Rancher management cluster nodes. The Ingress controller on the cluster will redirect HTTP traffic to HTTPS and terminate SSL/TLS on port TCP/443. The Ingress controller will forward traffic to port TCP/80 to the Ingress pod in the Rancher deployment.
-- **A layer-7 load balancer** is a bit more complicated but can offer features that you may want. For instance, a layer-7 load balancer is capable of handling TLS termination at the load balancer, as opposed to Rancher doing TLS termination itself. This can be beneficial if you want to centralize your TLS termination in your infrastructure. Layer-7 load balancing also offers the capability for your load balancer to make decisions based on HTTP attributes such as cookies, etc. that a layer-4 load balancer is not able to concern itself with. If you decide to terminate the SSL/TLS traffic on a layer-7 load balancer, you will need to use the `--set tls=external` option when installing Rancher in a later step. For more information, refer to the [Rancher Helm chart options.]({{<baseurl>}}/rancher/v2.x/en/installation/options/chart-options/#external-tls-termination)
+- **A layer-7 load balancer** is required if you want to terminate TLS termination at the load balancer, as opposed to Rancher doing TLS termination itself. This can be beneficial if you want to centralize your TLS termination in your infrastructure. Layer-7 load balancing also offers the capability for your load balancer to make decisions based on HTTP attributes such as cookies, etc. that a layer-4 load balancer is not able to concern itself with. If you decide to terminate the SSL/TLS traffic on a layer-7 load balancer, you will need to use the `--set tls=external` option when installing Rancher in a later step. For more information, refer to the [Rancher Helm chart options.]({{<baseurl>}}/rancher/v2.x/en/installation/options/chart-options/#external-tls-termination)
 
 For an example showing how to set up an NGINX load balancer, refer to [this page.]({{<baseurl>}}/rancher/v2.x/en/installation/options/nginx/)
 
@@ -107,7 +105,7 @@ When Rancher is installed (also in a later step), the Rancher system creates an 
 For your implementation, consider if you want or need to use a Layer-4 or Layer-7 load balancer:
 
 - **A layer-4 load balancer** is the simpler of the two choices, in which you are forwarding TCP traffic to your nodes. We recommend configuring your load balancer as a Layer 4 balancer, forwarding traffic to ports TCP/80 and TCP/443 to the Rancher management cluster nodes. The Ingress controller on the cluster will redirect HTTP traffic to HTTPS and terminate SSL/TLS on port TCP/443. The Ingress controller will forward traffic to port TCP/80 to the Ingress pod in the Rancher deployment.
-- **A layer-7 load balancer** is a bit more complicated but can offer features that you may want. For instance, a layer-7 load balancer is capable of handling TLS termination at the load balancer, as opposed to Rancher doing TLS termination itself. This can be beneficial if you want to centralize your TLS termination in your infrastructure. Layer-7 load balancing also offers the capability for your load balancer to make decisions based on HTTP attributes such as cookies, etc. that a layer-4 load balancer is not able to concern itself with. If you decide to terminate the SSL/TLS traffic on a layer-7 load balancer, you will need to use the `--set tls=external` option when installing Rancher in a later step. For more information, refer to the [Rancher Helm chart options.]({{<baseurl>}}/rancher/v2.x/en/installation/options/chart-options/#external-tls-termination)
+- **A layer-7 load balancer** is required if you want to terminate TLS termination at the load balancer, as opposed to Rancher doing TLS termination itself. This can be beneficial if you want to centralize your TLS termination in your infrastructure. Layer-7 load balancing also offers the capability for your load balancer to make decisions based on HTTP attributes such as cookies, etc. that a layer-4 load balancer is not able to concern itself with. If you decide to terminate the SSL/TLS traffic on a layer-7 load balancer, you will need to use the `--set tls=external` option when installing Rancher in a later step. For more information, refer to the [Rancher Helm chart options.]({{<baseurl>}}/rancher/v2.x/en/installation/options/chart-options/#external-tls-termination)
 
 For an example showing how to set up an NGINX load balancer, refer to [this page.]({{<baseurl>}}/rancher/v2.x/en/installation/options/nginx/)
 

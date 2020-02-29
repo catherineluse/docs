@@ -11,8 +11,4 @@ We recommend configuring the database to take recurring snapshots.
 
 ### Creating Snapshots and Restoring Databases from Snapshots
 
-For details on taking database snapshots and restoring your database from them, refer to the official database documentation:
-
-- [Official MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/replication-snapshot-method.html)
-- [Official PostgreSQL documentation](https://www.postgresql.org/docs/8.3/backup-dump.html)
-- [Official etcd documentation](https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/recovery.md)
+For details on taking database snapshots and restoring your database from them, refer to the [official MySQL documentation.](https://dev.mysql.com/doc/refman/8.0/en/replication-snapshot-method.html)

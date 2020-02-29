@@ -6,12 +6,12 @@ aliases:
   - /rancher/v2.x/en/tasks/clusters/creating-a-cluster/create-cluster-gke/
 ---
 
-## Prerequisites in Google Cloud Platform
+## Prerequisites in Google Kubernetes Engine
 
 >**Note**
 >Deploying to GKE will incur charges.
 
-Create a service account using [Google Cloud Platform](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts). GKE uses this account to operate your cluster. Creating this account also generates a private key used for authentication.
+Create a service account using [Google Kubernetes Engine](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts). GKE uses this account to operate your cluster. Creating this account also generates a private key used for authentication.
 
 The service account requires the following roles:
 

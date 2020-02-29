@@ -312,9 +312,16 @@ docker run -d --restart=unless-stopped \
 
 {{% /accordion %}}
 
-If you are installing Rancher v2.3.0+, the installation is complete.
-
-If you are installing Rancher versions prior to v2.3.0, you will not be able to use the packaged system charts. Since the Rancher system charts are hosted in Github, an air gapped installation will not be able to access these charts. Therefore, you must [configure the Rancher system charts]({{<baseurl>}}/rancher/v2.x/en/installation/options/local-system-charts/#setting-up-system-charts-for-rancher-prior-to-v2-3-0).
-
 {{% /tab %}}
 {{% /tabs %}}
+
+### Last Step: Configure the Rancher Server URL
+
+When you log in to the Rancher management server for the first time, you will be prompted to enter the server URL. This is the endpoint that downstream Kubernetes clusters will use to communicate with the Rancher management server, and it cannot be changed later. For the server URL, we recommend using the DNS name that forwards traffic to the load balancer in front of your Rancher server nodes.
+
+### System Charts
+
+If you are installing Rancher v2.3.0+, the installation is complete.
+
+If you are installing Rancher versions prior to v2.3.0, you will not be able to use the packaged system charts. Since the Rancher system charts are hosted in GitHub, an air gapped installation will not be able to access these charts. Therefore, you must [configure the Rancher system charts]({{<baseurl>}}/rancher/v2.x/en/installation/options/local-system-charts/#setting-up-system-charts-for-rancher-prior-to-v2-3-0).
+

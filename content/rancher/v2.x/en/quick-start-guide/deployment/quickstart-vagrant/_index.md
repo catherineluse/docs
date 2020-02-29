@@ -2,7 +2,9 @@
 title: Vagrant Quick Start
 weight: 200
 ---
-The following steps quickly deploy a Rancher Server with a single node cluster attached.
+In this guide, you will learn how to quickly deploy the Rancher management server in a single Docker container. You will also deploy one downstream single-node Kubernetes cluster.
+
+> **Note:** In a production environment, the Rancher server would run on a separate, designated Kubernetes cluster. For more information, refer to our [Best Practices Guide.]({{<baseurl>}}/rancher/v2.x/en/best-practices/)
 
 ## Prerequisites
 
@@ -23,7 +25,7 @@ The following steps quickly deploy a Rancher Server with a single node cluster a
 
 4. To initiate the creation of the environment run, `vagrant up`.
 
-5. Once provisioning finishes, go to `https://172.22.101.101` in the browser. The default user/password is `admin/admin`.
+5. Once provisioning finishes, go to `https://172.22.101.101` in the browser. This IP has been configured as the Rancher management server IP, a permanent configuration. Downstream Kubernetes clusters will communicate with the Rancher management server by reaching this IP. The default user/password is `admin/admin`.
 
 **Result:** Rancher Server and your Kubernetes cluster is installed on VirtualBox.
 

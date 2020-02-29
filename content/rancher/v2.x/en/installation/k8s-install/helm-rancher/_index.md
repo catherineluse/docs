@@ -28,6 +28,7 @@ To set up Rancher,
 6. [Install Rancher with Helm and your chosen certificate option](#6-install-rancher-with-helm-and-your-chosen-certificate-option)
 7. [Verify that the Rancher server is successfully deployed](#7-verify-that-the-rancher-server-is-successfully-deployed)
 8. [Save your options](#8-save-your-options)
+9. [Configure the Rancher server URL](#9-configure-the-rancher-server-url)
 
 ### 1. Install the Required CLI Tools
 
@@ -241,12 +242,14 @@ It should show the same count for `DESIRED` and `AVAILABLE`.
 
 ### 8. Save Your Options
 
-Make sure you save the `--set` options you used. You will need to use the same options when you upgrade Rancher to new versions with Helm.
+Make sure you save the `--set` options you used. You will need to use the same options when you upgrade Rancher to new versions with Helm. 
+
+### 9. Configure the Rancher Server URL
+
+When you log in to the Rancher management server for the first time, you will be prompted to enter the server URL. This is the endpoint that downstream Kubernetes clusters will use to communicate with the Rancher management server, and it cannot be changed later. For the server URL, we recommend using the DNS name that forwards traffic to the load balancer in front of your Rancher server nodes.
 
 ### Finishing Up
 
 That's it. You should have a functional Rancher server.
-
-In a web browser, go to the DNS name that forwards traffic to your load balancer. Then you should be greeted by the colorful login page.
 
 Doesn't work? Take a look at the [Troubleshooting]({{<baseurl>}}/rancher/v2.x/en/installation/options/troubleshooting/) Page

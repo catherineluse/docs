@@ -43,6 +43,8 @@ You can install Rancher on a single node, or on a high-availability Kubernetes c
 
 A high-availability Kubernetes installation is recommended for production. A Docker installation may be used for development and testing purposes, but there is no migration path from a single-node to a high-availability installation. Therefore, you may want to use a Kubernetes installation from the start.
 
+We support running the Rancher management server on a Kubernetes cluster installed with [RKE (Rancher Kubernetes Engine)]({{<baseurl>}}/rke/latest/en/) or [K3s (5 less than K8s).]({{<baseurl>}}/k3s/latest/en/) Both are fully certified Kubernetes distributions released by Rancher. K3s is a more lightweight distribution.
+
 The Rancher server, regardless of the installation method, should always run on nodes that are separate from the downstream user clusters that it manages. If Rancher is installed on a high-availability Kubernetes cluster, it should run on a separate cluster from the cluster(s) it manages.
 
 # Communicating with Downstream User Clusters
@@ -64,8 +66,7 @@ The following descriptions correspond to the numbers in the diagram above:
 
 ### 1. The Authentication Proxy
 
-In this diagram, a user named Bob wants to see all pods running on a downstream user cluster called User Cluster 1. From within Rancher, he can run a `kubectl` command to see
-the pods. Bob is authenticated through Rancher's authentication proxy.
+In this diagram, a user named Bob wants to see all pods running on a downstream user cluster called User Cluster 1. From within Rancher, he can run a `kubectl` command to see the pods. Bob is authenticated through Rancher's authentication proxy.
 
 The authentication proxy forwards all Kubernetes API calls to downstream clusters. It integrates with authentication services like local authentication, Active Directory, and GitHub. On every Kubernetes API call, the authentication proxy authenticates the caller and sets the proper Kubernetes impersonation headers before forwarding the call to Kubernetes masters.
 
@@ -122,11 +123,23 @@ You will need to use a context defined in this kubeconfig file to access the clu
 
 # Important Files
 
-The files mentioned below are needed to maintain, troubleshoot and upgrade your cluster:
+The files mentioned below are needed to maintain, troubleshoot and upgrade the Kubernetes cluster that the Rancher management server is installed on.
+
+The files you need to save differ depending on if Rancher is installed on an RKE Kubernetes cluster or a K3s Kubernetes cluster.
+
+### Important files for Rancher Installed on an RKE Kubernetes Cluster
 
 - `rancher-cluster.yml`: The RKE cluster configuration file.
 - `kube_config_rancher-cluster.yml`: The Kubeconfig file for the cluster, this file contains credentials for full access to the cluster. You can use this file to authenticate with a Rancher-launched Kubernetes cluster if Rancher goes down.
 - `rancher-cluster.rkestate`: The Kubernetes cluster state file. This file contains credentials for full access to the cluster. Note: This state file is only created when using RKE v0.2.0 or higher.
+
+### Important files for Rancher Installed on a K3s Kubernetes Cluster
+
+In Rancher v2.4, it became officially supported to install the Rancher management server on a K3s Kubernetes cluster. As of Rancher v2.4, there is no way to migrate a Rancher server on an RKE cluster to a K3s cluster.
+
+When you installed K3s on each Rancher server node, a `kubeconfig` file was created on the node at `/etc/rancher/k3s/k3s.yaml`. This file contains credentials for full access to the cluster, and you should save this file in a secure location.
+
+### Cluster Access with kubectl
 
 For more information on connecting to a cluster without the Rancher authentication proxy and other configuration options, refer to the [kubeconfig file]({{<baseurl>}}/rancher/v2.x/en/cluster-admin/cluster-access/kubeconfig/) documentation.
 

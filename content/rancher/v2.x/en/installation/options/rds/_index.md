@@ -12,7 +12,9 @@ This database can later be used as an external datastore for a high-availability
 1. In the **Engine type** section, click **MySQL.**
 1. In the **Version** section, choose **MySQL 5.7.22.**
 1. In **Settings** section, under **Credentials Settings,** enter a master password for the **admin** master username. Confirm the password.
+1. In the **Network & Security** section, choose a security group that will allow the nodes running the Rancher server to access the database.
 1. Expand the **Additional configuration** section. In the **Initial database name** field, enter a name. The name can have only letters, numbers, and underscores. This name will be used to connect to the database.
+1. Also in the **Additional configuration** section, we recommend configuring automatic backups. Ensure the box for **Enable automatic backups** is checked. In the **Backup retention period** field, enter the number of days RDS should retain backups, for example, 35 days. If necessary, you can recover your database to any point in time during the backup retention period. 
 1. Click **Create database.**
 
 You'll need to capture the following information about the new database so that the K3s Kubernetes cluster can connect to it.
