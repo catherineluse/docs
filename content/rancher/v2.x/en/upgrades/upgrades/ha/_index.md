@@ -1,12 +1,12 @@
 ---
-title: Upgrading Rancher Installed on Kubernetes
+title: RKE Kubernetes Cluster Upgrades
 weight: 1020
 aliases:
   - /rancher/v2.x/en/upgrades/upgrades/ha-server-upgrade-helm-airgap
   - /rancher/v2.x/en/upgrades/air-gap-upgrade/
 ---
 
-The following instructions will guide you through using Helm to upgrade a Rancher server that was installed on a Kubernetes cluster.
+The following instructions will guide you through using Helm to upgrade a Rancher server that was installed on an RKE Kubernetes cluster.
 
 To upgrade the components in your Kubernetes cluster, or the definition of the [Kubernetes services]({{<baseurl>}}/rke/latest/en/config-options/services/) or [add-ons]({{<baseurl>}}/rke/latest/en/config-options/add-ons/), refer to the [upgrade documentation for RKE]({{<baseurl>}}/rke/latest/en/upgrades/), the Rancher Kubernetes Engine.
 

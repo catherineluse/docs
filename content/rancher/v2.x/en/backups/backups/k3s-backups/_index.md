@@ -1,5 +1,5 @@
 ---
-title: Backing up Rancher Installed on a K3s Kubernetes Cluster
+title: K3s Kubernetes Cluster Backups
 weight: 1
 ---
 
@@ -11,4 +11,6 @@ We recommend configuring the database to take recurring snapshots.
 
 ### Creating Snapshots and Restoring Databases from Snapshots
 
-For details on taking database snapshots and restoring your database from them, refer to the [official MySQL documentation.](https://dev.mysql.com/doc/refman/8.0/en/replication-snapshot-method.html)
+If you used Amazon RDS (Relational Database Service) to store your K3s cluster data, refer to the official Amazon documentation about [Backing Up and Restoring Amazon RDS DB Instances.](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+
+Otherwise, refer to the [official upstream MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/replication-snapshot-method.html) or other upstream documentation for the setup that you used for the cluster datastore.

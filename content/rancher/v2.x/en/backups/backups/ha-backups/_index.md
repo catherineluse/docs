@@ -1,5 +1,5 @@
 ---
-title: Backing up Rancher Installed on an RKE Kubernetes Cluster
+title: RKE Kubernetes Cluster Backups
 weight: 2
 aliases:
   - /rancher/v2.x/en/installation/after-installation/k8s-install-backup-and-restoration/

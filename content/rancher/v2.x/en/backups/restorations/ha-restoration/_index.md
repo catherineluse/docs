@@ -1,6 +1,6 @@
 ---
-title: Restoring Backups—Kubernetes installs
-shortTitle: Kubernetes Installs
+title: RKE Kubernetes Cluster Restoration
+shortTitle: RKE Restore
 weight: 370
 aliases:
   - /rancher/v2.x/en/installation/after-installation/ha-backup-and-restoration/

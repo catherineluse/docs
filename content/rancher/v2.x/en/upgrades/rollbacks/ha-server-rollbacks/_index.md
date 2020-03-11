@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Rollback
+title: RKE Kubernetes Cluster Rollbacks
 weight: 1025
 aliases:
   - /rancher/v2.x/en/upgrades/ha-server-rollbacks
