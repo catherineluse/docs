@@ -5,7 +5,7 @@ weight: 15
 
 > This section is about the new version of the Istio app in Rancher v2.5.0. If you are using a Rancher version from v2.3.0 to v2.5.0, the older way of setting up Istio is documented in [this section.]({{<baseurl>}}/rancher/v2.x/en/istio/legacy/)
 
- [Istio](https://istio.io/) is an open-source tool that makes it easier for DevOps teams to observe, control, troubleshoot, and secure the traffic within a complex network of microservices.
+[Istio](https://istio.io/) is an open-source tool that makes it easier for DevOps teams to observe, control, troubleshoot, and secure the traffic within a complex network of microservices.
 
  As a network of microservices changes and grows, the interactions between them can become more difficult to manage and understand. In such a situation, it is useful to have a service mesh as a separate infrastructure layer. Istio's service mesh lets you manipulate traffic between microservices without changing the microservices directly.
 

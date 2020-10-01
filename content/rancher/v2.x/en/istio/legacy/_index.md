@@ -10,7 +10,7 @@ aliases:
 ---
 _Available as of v2.3.0_
 
-> In Rancher 2.5, the Istio application was improved. There are now two ways to enable Istio. The older way is documented in this section, and the new application for Istio is documented in the [dashboard section.]({{<baseurl>}}/rancher/istio)
+> In Rancher 2.5, the Istio application was improved. There are now two ways to enable Istio. The older way is documented in this section, and the new application for Istio is documented [here.]({{<baseurl>}}/rancher/istio)
 
  [Istio](https://istio.io/) is an open-source tool that makes it easier for DevOps teams to observe, control, troubleshoot, and secure the traffic within a complex network of microservices.
 
