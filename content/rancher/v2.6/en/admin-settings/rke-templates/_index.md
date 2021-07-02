@@ -3,9 +3,19 @@ title: RKE Templates
 weight: 7010
 ---
 
-RKE templates are designed to allow DevOps and security teams to standardize and simplify the creation of Kubernetes clusters.
+RKE templates are designed to allow DevOps and security teams to standardize and simplify the creation of Kubernetes clusters. RKE is the [Rancher Kubernetes Engine,]({{<baseurl>}}/rke/latest/en/) which is the tool that Rancher uses to provision Kubernetes clusters.
 
-RKE is the [Rancher Kubernetes Engine,]({{<baseurl>}}/rke/latest/en/) which is the tool that Rancher uses to provision Kubernetes clusters.
+- [Overview](#overview)
+- [Configurable Settings](#configurable-settings)
+- [Scope of RKE Templates](#scope-of-rke-templates)
+- [Example Scenarios](#example-scenarios)
+- [Template Management](#template-management)
+- [Applying Templates](#applying-templates)
+- [Standardizing Hardware](#standardizing-hardware)
+- [YAML Customization](#yaml-customization)
+  - [Add-ons](#add-ons)
+
+# Overview
 
 With Kubernetes increasing in popularity, there is a trend toward managing a larger number of smaller clusters. When you want to create many clusters, it’s more important to manage them consistently. Multi-cluster management comes with challenges to enforcing security and add-on configurations that need to be standardized before turning clusters over to end users.
 
@@ -54,6 +64,7 @@ The settings of an existing cluster can be [saved as an RKE template.]({{<baseur
 
 
 # Example Scenarios
+
 When an organization has both basic and advanced Rancher users, administrators might want to give the advanced users more options for cluster creation, while restricting the options for basic users.
 
 These [example scenarios]({{<baseurl>}}/rancher/v2.6/en/admin-settings/rke-templates/example-scenarios) describe how an organization could use templates to standardize cluster creation.
